@@ -25,7 +25,7 @@ class LyndaBaseIE(InfoExtractor):
         self._login()
 
     def _login(self):
-        (username, password) = self._get_login_info()
+        username, password = self._get_login_info()
         if username is None:
             return
 
@@ -83,6 +83,10 @@ class LyndaBaseIE(InfoExtractor):
             raise ExtractorError('Unable to log in')
 
     def _logout(self):
+        username, _ = self._get_login_info()
+        if username is None:
+            return
+
         self._download_webpage(
             'http://www.lynda.com/ajax/logout.aspx', None,
             'Logging out', 'Unable to log out', fatal=False)
